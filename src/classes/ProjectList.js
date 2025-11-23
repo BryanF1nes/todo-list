@@ -1,16 +1,28 @@
 export class ProjectList {
-  constructor() {
-    this.projects = [];
-  }
+    constructor() {
+        this.projects = [];
+    }
 
-  addProject = (project) => {
-    this.projects.push(project);
-    return this.projects.length;
-  };
+    findProject = (id) => {
+        const project = this.projects.find((project) => project.id === id);
+        if (!project) {
+            throw new Error('Project not found.');
+        }
+        return project;
+    }
 
-  removeProject = (id) => {
-    const project = this.projects.findIndex((project) => project.id === id);
-    this.projects.splice(project, 1);
-    return this.projects.length;
-  };
-}
+    addProject = (project) => {
+        this.projects.push(project);
+    };
+
+    removeProject = (id) => {
+        const index = this.projects.findIndex((project) => project.id === id);
+        this.projects.splice(index, 1);
+    };
+
+    editProject = (id, title) => {
+        const project = this.findProject(id);
+        project.title = title;
+        return project;
+    };
+};
