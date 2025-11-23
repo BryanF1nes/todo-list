@@ -62,6 +62,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="todo-modal hidden">
+            <form>
+                <div class="todo-header">
+                    <h1>Create Your Todo <span><i class="fa-solid fa-bolt"></i></span></h1>
+                    <i class="fa-solid fa-circle-xmark fa-lg close"></i>
+                </div>
+                <input type="text" placeholder="Title">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" placeholder="description..."></textarea>
+                <div>
+                    <label for="due-date">Date</label>
+                    <input type="date">
+                </div>
+                <div>
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <button type="submit">Create Todo</button>
+            </form>
+        </div>
     </div>
 
     <script src="./index.js"></script>
