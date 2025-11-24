@@ -26,18 +26,19 @@
             </div>
 
             <div class="dashboard-container">
+                <button id="project-button" class="button">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Add Project</span>
+                </button>
+
+                <div class="project-modal hidden">
+                    <form id="project-form">
+                        <input type="text" placeholder="Title">
+                        <button>Create</button>
+                    </form>
+                </div>
+
                 <div class="project-container">
-                    <button id="project-button" class="button"><i class="fa-solid fa-circle-plus"></i> <span>Add
-                            Project</span></button>
-
-                    <div class="project-modal hidden">
-                        <form id="project-form">
-                            <input type="text" placeholder="Title">
-                            <button>Create</button>
-                        </form>
-                    </div>
-
-                    <button class="button"><i class="fa-solid fa-hashtag"></i><span>Default</span></button>
                 </div>
             </div>
         </div>

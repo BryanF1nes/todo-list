@@ -1,4 +1,6 @@
-export class ProjectList {
+import { Project } from "./project";
+
+class ProjectList {
     constructor() {
         this.projects = [];
     }
@@ -26,3 +28,7 @@ export class ProjectList {
         return project;
     };
 };
+
+const project = new Project('Default');
+export const Projects = new ProjectList();
+Projects.addProject(project);
