@@ -4,22 +4,51 @@ import { Todo } from "../classes/todo.js";
 import { Project } from "../classes/project";
 
 export const Controller = (() => {
-    const projects = Projects.projects;
     let selected = Projects.projects[0];
     const init = () => {
         render();
+        UI.renderProjectTitle(selected);
         bindEvents();
     };
 
     const render = () => {
-        UI.renderProjects(projects);
+        UI.renderProjects(Projects.projects);
         UI.renderTodos(selected);
     }
 
     const bindEvents = () => {
-        UI.el.addTask().addEventListener('click', () => UI.showTodoModal());
-        UI.el.closeButton().addEventListener('click', () => UI.hideTodoModal());
-        UI.el.projectButton().addEventListener('click', () => UI.showProjectForm());
+        UI.el.addTask().addEventListener('click', () => UI.showElement(UI.el.todoModal()));
+        UI.el.closeButtonAdd().addEventListener('click', () => UI.hideElement(UI.el.todoModal()));
+        UI.el.closeButtonEdit().addEventListener('click', () => UI.hideElement(UI.el.editTodoModal()));
+        UI.el.projectButton().addEventListener('click', () => UI.showElement(UI.el.projectModal()));
+
+        UI.el.todoContainer().addEventListener('click', (e) => {
+            const todoItem = e.target.closest(".todo-item");
+            if (!todoItem) return;
+
+            const todoId = todoItem.dataset.todoId;
+
+            if (e.target.closest(".edit")) {
+                handleEdit(todoId);
+            }
+
+            if (e.target.closest(".remove")) {
+                handleRemove(todoId);
+            }
+        });
+
+        UI.el.projectContainer().addEventListener('click', (e) => {
+            const button = e.target.closest('button[data-project-id]');
+            if (!button) return;
+
+            const projectId = button.dataset.projectId;
+
+            const project = Projects.findProject(projectId);
+            selected = project;
+            UI.renderProjectTitle(selected);
+            render();
+        });
+
         UI.el.projectForm().addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -29,7 +58,7 @@ export const Controller = (() => {
             const project = new Project(title);
 
             Projects.addProject(project);
-            UI.hideProjectForm();
+            UI.hideElement(UI.el.projectModal());
             render();
 
             e.target.reset();
@@ -48,9 +77,48 @@ export const Controller = (() => {
             const todo = new Todo(title, description, dueDate, priority, selected);
             selected.addTodo(todo);
             e.target.reset();
-            UI.hideTodoModal();
+            UI.hideElement(UI.el.todoModal());
             render();
         });
+
+        UI.el.editTodoForm().addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const todoId = form.dataset.todoId;
+
+            const todo = selected.findTodo(todoId);
+
+            const formData = new FormData(form);
+            todo.title = formData.get("title");
+            todo.description = formData.get("description");
+            todo.dueDate = formData.get("dueDate");
+            todo.priority = formData.get("priority");
+
+            UI.hideElement(UI.el.editTodoModal());
+            form.reset();
+            render();
+        });
+    };
+
+    const handleEdit = (id) => {
+        const currentTodo = selected.findTodo(id);
+        const form = UI.el.editTodoForm();
+        UI.showElement(UI.el.editTodoModal());
+
+        form.querySelector('input[name="title"]').value = currentTodo.title;
+        form.querySelector('textarea[name="description"]').value = currentTodo.description;
+        form.querySelector('input[name="dueDate"]').value = currentTodo.dueDate;
+        form.querySelector('select[name="priority"]').value = currentTodo.priority;
+
+        // store ID so submit handler knows which todo to update
+        form.dataset.todoId = id;
+    };
+
+    const handleRemove = (id) => {
+        const currentTodo = selected.findTodo(id);
+        selected.removeTodo(currentTodo.id);
+        render();
     };
 
     return { init }

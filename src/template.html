@@ -46,6 +46,8 @@
 
         <div class="main-content">
             <div class="project-title">
+                <h1 class="title"></h1>
+                <button class="add-task"><i class="fa-solid fa-circle-plus"></i><span>Add Task</span></button>
             </div>
 
             <div class="todos">
@@ -85,6 +87,31 @@
                     </select>
                 </div>
                 <button type="submit">Create Todo</button>
+            </form>
+        </div>
+
+        <div class="todo-modal edit-todo-modal hidden">
+            <form class="edit-todo-form">
+                <div class="todo-header">
+                    <h1>Edit Your Todo <span><i class="fa-solid fa-bolt"></i></span></h1>
+                    <i class="fa-solid fa-circle-xmark fa-lg close"></i>
+                </div>
+                <input type="text" placeholder="Title" name="title">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" placeholder="description..."></textarea>
+                <div>
+                    <label for="due-date">Date</label>
+                    <input type="date" name="dueDate">
+                </div>
+                <div>
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <button type="submit">Update Todo</button>
             </form>
         </div>
     </div>

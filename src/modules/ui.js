@@ -1,5 +1,6 @@
 export const UI = (() => {
     const el = {
+        mainContainer: () => document.querySelector('.main-content'),
         projectButton: () => document.getElementById('project-button'),
         projectModal: () => document.querySelector('.project-modal'),
         projectForm: () => document.getElementById('project-form'),
@@ -8,8 +9,12 @@ export const UI = (() => {
         todoContainer: () => document.querySelector('.todos'),
         todoModal: () => document.querySelector('.todo-modal'),
         todoForm: () => document.querySelector('.todo-form'),
+        editTodoModal: () => document.querySelector('.edit-todo-modal'),
+        editTodoForm: () => document.querySelector('.edit-todo-form'),
         addTask: () => document.querySelector('.add-task'),
-        closeButton: () => document.querySelector('.close'),
+        closeButtonAdd: () => document.querySelector('.todo-modal .close'),
+        closeButtonEdit: () => document.querySelector('.edit-todo-modal .close'),
+        dashboardButton: () => document.querySelector('.button'),
     };
 
     const clear = (node) => { node.innerHTML = ``; };
@@ -46,7 +51,7 @@ export const UI = (() => {
         todoTitle.textContent = todo.title;
 
         todoPriority.className = `${todo.priority}`;
-        calender.className = "fa-solid fa-calender-days";
+        calender.className = "fa-solid fa-calendar-days";
         todoDate.textContent = todo.dueDate;
 
         todoPriority.append(calender, todoDate);
@@ -80,43 +85,32 @@ export const UI = (() => {
     };
 
     const renderTodos = (projects) => {
-        const projectTitle = el.projectTitle();
-        const title = document.createElement('h1');
-        const button = document.createElement('button');
-        const plus = document.createElement('i');
-        const span = document.createElement('span');
         const parent = el.todoContainer();
-
-        projectTitle.id = projects.id;
-        title.textContent = projects.title;
-        button.className = "add-task";
-        plus.className = "fa-solid fa-circle-plus";
-        span.textContent = "Add Task";
-
-        button.append(plus, span);
-        projectTitle.append(title, button);
-
         clear(parent);
+
         projects.todos.forEach((todo) => {
             parent.appendChild(todoItem(todo));
         });
     };
 
-    const showTodoModal = () => {
-        el.todoModal().classList.remove('hidden');
+    const renderProjectTitle = (projects) => {
+        const projectTitle = el.projectTitle();
+        const firstChild = projectTitle.firstChild;
+        const title = document.querySelector('.title');
+
+        projectTitle.id = projects.id;
+        title.textContent = projects.title;
+
+        projectTitle.insertBefore(title, firstChild);
+    }
+
+    const showElement = (el) => {
+        el.classList.remove('hidden');
     };
 
-    const hideTodoModal = () => {
-        el.todoModal().classList.add('hidden');
+    const hideElement = (el) => {
+        el.classList.add('hidden');
     };
 
-    const showProjectForm = () => {
-        el.projectModal().classList.remove('hidden');
-    };
-
-    const hideProjectForm = () => {
-        el.projectModal().classList.add('hidden');
-    };
-
-    return { el, renderProjects, renderTodos, showTodoModal, hideTodoModal, showProjectForm, hideProjectForm }
+    return { el, renderProjects, renderTodos, showElement, hideElement, renderProjectTitle }
 })();
