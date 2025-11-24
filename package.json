@@ -7,7 +7,8 @@
     "build": "npx webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "npx prettier . --write",
-    "check": "npx prettier . --check"
+    "check": "npx prettier . --check",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
   "author": "",
