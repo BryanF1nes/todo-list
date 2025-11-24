@@ -4,8 +4,11 @@ export const UI = (() => {
         projectModal: () => document.querySelector('.project-modal'),
         projectForm: () => document.getElementById('project-form'),
         projectContainer: () => document.querySelector('.project-container'),
+        projectTitle: () => document.querySelector('.project-title'),
         todoContainer: () => document.querySelector('.todos'),
         todoForm: () => document.querySelector('.todo-modal'),
+        addTask: () => document.querySelector('.add-task'),
+        closeButton: () => document.querySelector('.close'),
     };
 
     const clear = (node) => { node.innerHTML = ``; };
@@ -75,12 +78,26 @@ export const UI = (() => {
     };
 
     const renderTodos = (projects) => {
+        const projectTitle = el.projectTitle();
+        const title = document.createElement('h1');
+        const button = document.createElement('button');
+        const plus = document.createElement('i');
+        const span = document.createElement('span');
         const parent = el.todoContainer();
+
+        projectTitle.id = projects.id;
+        title.textContent = projects.title;
+        button.className = "add-task";
+        plus.className = "fa-solid fa-circle-plus";
+        span.textContent = "Add Task";
+
+        button.append(plus, span);
+        projectTitle.append(title, button);
+
         clear(parent);
         projects.todos.forEach((todo) => {
             parent.appendChild(todoItem(todo));
         });
-
     };
 
     const showTodoForm = () => {
@@ -99,8 +116,6 @@ export const UI = (() => {
     const hideProjectForm = () => {
         el.projectModal().classList.add('hidden');
     };
-
-
 
     return { el, renderProjects, renderTodos, showTodoForm, hideTodoForm, showProjectForm, hideProjectForm }
 })();
