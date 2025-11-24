@@ -4,8 +4,11 @@ import { Todo } from "../classes/todo.js";
 import { Project } from "../classes/project";
 
 export const Controller = (() => {
-    let selected = Projects.projects[0];
+    let selected;
     const init = () => {
+        Projects.load();
+        selected = Projects.projects[0];
+
         render();
         UI.renderProjectTitle(selected);
         bindEvents();
@@ -21,6 +24,25 @@ export const Controller = (() => {
         UI.el.closeButtonAdd().addEventListener('click', () => UI.hideElement(UI.el.todoModal()));
         UI.el.closeButtonEdit().addEventListener('click', () => UI.hideElement(UI.el.editTodoModal()));
         UI.el.projectButton().addEventListener('click', () => UI.showElement(UI.el.projectModal()));
+
+        UI.el.removeProjectButton().addEventListener('click', () => {
+            if (selected.title === "Default") {
+                alert("The Default project cannot be deleted.");
+                return;
+            }
+
+            Projects.removeProject(selected.id);
+            Projects.save();
+
+            if (Projects.projects.length > 0) {
+                selected = Projects.projects[0];
+                UI.renderProjectTitle(selected);
+            } else {
+                selected = null;
+            }
+
+            render();
+        })
 
         UI.el.todoContainer().addEventListener('click', (e) => {
             const todoItem = e.target.closest(".todo-item");
@@ -58,6 +80,7 @@ export const Controller = (() => {
             const project = new Project(title);
 
             Projects.addProject(project);
+            Projects.save();
             UI.hideElement(UI.el.projectModal());
             render();
 
@@ -74,8 +97,9 @@ export const Controller = (() => {
             const dueDate = formData.get("dueDate");
             const priority = formData.get("priority");
 
-            const todo = new Todo(title, description, dueDate, priority, selected);
+            const todo = new Todo(title, description, dueDate, priority, selected.id);
             selected.addTodo(todo);
+            Projects.save();
             e.target.reset();
             UI.hideElement(UI.el.todoModal());
             render();
@@ -95,6 +119,7 @@ export const Controller = (() => {
             todo.dueDate = formData.get("dueDate");
             todo.priority = formData.get("priority");
 
+            Projects.save();
             UI.hideElement(UI.el.editTodoModal());
             form.reset();
             render();
@@ -118,6 +143,7 @@ export const Controller = (() => {
     const handleRemove = (id) => {
         const currentTodo = selected.findTodo(id);
         selected.removeTodo(currentTodo.id);
+        Projects.save();
         render();
     };
 

@@ -1,4 +1,5 @@
 import { Project } from "./project";
+import { Todo } from "./todo";
 
 class ProjectList {
     constructor() {
@@ -27,8 +28,35 @@ class ProjectList {
         project.title = title;
         return project;
     };
+
+    save = () => {
+        localStorage.setItem("projects", JSON.stringify(this.projects));
+    };
+
+    load = () => {
+        const data = localStorage.getItem("projects");
+        if (!data) return;
+
+        const parsed = JSON.parse(data);
+
+        this.projects = parsed.map((p) => {
+            const project = new Project(p.title);
+            project.id = p.id;
+
+            project.todos = p.todos.map(t => {
+                const todo = new Todo(t.title, t.description, t.dueDate, t.priority, t.project);
+                todo.id = t.id;
+                return todo;
+            });
+            return project;
+        })
+    };
 };
 
-const project = new Project('Default');
 export const Projects = new ProjectList();
-Projects.addProject(project);
+Projects.load();
+
+if (Projects.projects.length === 0) {
+    Projects.addProject(new Project("Default"));
+    Projects.save();
+};
