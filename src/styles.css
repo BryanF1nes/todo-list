@@ -145,13 +145,12 @@ p {
     form {
         display: flex;
         align-items: center;
-        width: 100%;
         border: none;
-        padding: 8px 24px;
     }
 
     input {
         padding: 8px 8px;
+        width: 100%;
         border-radius: 12px 0px 0px 12px;
         border: 2px solid var(--primary);
     }
@@ -273,6 +272,27 @@ p {
     color: var(--accent);
 }
 
+.remove-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.remove-project {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.remove-project:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+    cursor: pointer;
+}
+
 .todo-modal {
     position: absolute;
     display: flex;
@@ -334,4 +354,25 @@ p {
 
 .hidden {
     display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    .side-panel {
+        max-width: 250px;
+    }
+
+    .main-content {
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .side-panel {
+        display: none;
+    }
+
+    .main-content {
+        margin-right: 0;
+    }
 }

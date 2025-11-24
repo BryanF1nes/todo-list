@@ -15,6 +15,7 @@ export const UI = (() => {
         closeButtonAdd: () => document.querySelector('.todo-modal .close'),
         closeButtonEdit: () => document.querySelector('.edit-todo-modal .close'),
         dashboardButton: () => document.querySelector('.button'),
+        removeProjectButton: () => document.querySelector('.remove-project'),
     };
 
     const clear = (node) => { node.innerHTML = ``; };
