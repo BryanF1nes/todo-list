@@ -17,8 +17,8 @@ export const Controller = (() => {
     }
 
     const bindEvents = () => {
-        UI.el.addTask().addEventListener('click', () => UI.showTodoForm());
-        UI.el.closeButton().addEventListener('click', () => UI.hideTodoForm());
+        UI.el.addTask().addEventListener('click', () => UI.showTodoModal());
+        UI.el.closeButton().addEventListener('click', () => UI.hideTodoModal());
         UI.el.projectButton().addEventListener('click', () => UI.showProjectForm());
         UI.el.projectForm().addEventListener('submit', (e) => {
             e.preventDefault();
@@ -39,6 +39,17 @@ export const Controller = (() => {
             e.preventDefault();
 
             const formData = new FormData(UI.el.todoForm());
+
+            const title = formData.get("title");
+            const description = formData.get("description");
+            const dueDate = formData.get("dueDate");
+            const priority = formData.get("priority");
+
+            const todo = new Todo(title, description, dueDate, priority, selected);
+            selected.addTodo(todo);
+            e.target.reset();
+            UI.hideTodoModal();
+            render();
         });
     };
 

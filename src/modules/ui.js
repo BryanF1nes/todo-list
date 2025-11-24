@@ -6,7 +6,8 @@ export const UI = (() => {
         projectContainer: () => document.querySelector('.project-container'),
         projectTitle: () => document.querySelector('.project-title'),
         todoContainer: () => document.querySelector('.todos'),
-        todoForm: () => document.querySelector('.todo-modal'),
+        todoModal: () => document.querySelector('.todo-modal'),
+        todoForm: () => document.querySelector('.todo-form'),
         addTask: () => document.querySelector('.add-task'),
         closeButton: () => document.querySelector('.close'),
     };
@@ -55,6 +56,7 @@ export const UI = (() => {
         const edit = document.createElement('div');
         const editIcon = document.createElement('i');
         const editSpan = document.createElement('span');
+        todoActions.className = "todo-actions";
 
         edit.className = "edit";
         editIcon.className = "fa-solid fa-pen-to-square";
@@ -100,16 +102,15 @@ export const UI = (() => {
         });
     };
 
-    const showTodoForm = () => {
-        el.todoForm().classList.remove('hidden');
+    const showTodoModal = () => {
+        el.todoModal().classList.remove('hidden');
     };
 
-    const hideTodoForm = () => {
-        el.todoForm().classList.add('hidden');
+    const hideTodoModal = () => {
+        el.todoModal().classList.add('hidden');
     };
 
     const showProjectForm = () => {
-        console.log('hello');
         el.projectModal().classList.remove('hidden');
     };
 
@@ -117,5 +118,5 @@ export const UI = (() => {
         el.projectModal().classList.add('hidden');
     };
 
-    return { el, renderProjects, renderTodos, showTodoForm, hideTodoForm, showProjectForm, hideProjectForm }
+    return { el, renderProjects, renderTodos, showTodoModal, hideTodoModal, showProjectForm, hideProjectForm }
 })();

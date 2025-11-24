@@ -64,17 +64,17 @@
         </div>
 
         <div class="todo-modal hidden">
-            <form>
+            <form class="todo-form">
                 <div class="todo-header">
                     <h1>Create Your Todo <span><i class="fa-solid fa-bolt"></i></span></h1>
                     <i class="fa-solid fa-circle-xmark fa-lg close"></i>
                 </div>
-                <input type="text" placeholder="Title">
+                <input type="text" placeholder="Title" name="title">
                 <label for="description">Description</label>
                 <textarea name="description" id="description" placeholder="description..."></textarea>
                 <div>
                     <label for="due-date">Date</label>
-                    <input type="date">
+                    <input type="date" name="dueDate">
                 </div>
                 <div>
                     <label for="priority">Priority</label>
