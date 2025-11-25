@@ -13,6 +13,6 @@ Integration with localStorage was made easy by having a good foundation within e
 
 ## Hosting
 
-Hosting was done through Github Pages. Icons we're provided from [Font Awesome]() and inspiration for the design came from [Todoist]('https://www.todoist.com/').
+Hosting was done through Github Pages. Icons we're provided from [Font Awesome](https://fontawesome.com/) and inspiration for the design came from [Todoist](https://www.todoist.com/).
 
-Live - [Todo App]('https://bryanf1nes.github.io/todo-list/')
+Live - [Todo App](https://bryanf1nes.github.io/todo-list/)
