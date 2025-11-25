@@ -441,7 +441,7 @@ p {
     }
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 500px) {
     .container {
         flex-direction: column;
     }
