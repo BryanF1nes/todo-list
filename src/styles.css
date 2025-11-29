@@ -417,8 +417,10 @@ p {
     .project-modal,
     .todo-modal,
     .edit-todo-modal {
-        background-color: var(--background-secondary);
+        background-color: rgba(0, 0, 0, 0.3);
         color: var(--text);
+        z-index: 1;
+        backdrop-filter: blur(5px);
     }
 
     input,
